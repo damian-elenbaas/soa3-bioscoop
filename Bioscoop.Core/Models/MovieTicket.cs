@@ -1,11 +1,12 @@
 
 namespace Bioscoop.Core.Models;
 
-public class MovieTicket
+public class MovieTicket(MovieScreening movieScreening, bool isPremiumReservation, int seatRow, int seatNr)
 {
-    private int RowNr { get; init; }
-    private int SeatNr { get; init; }
-    private bool IsPremium { get; init; }
+    private MovieScreening MovieScreening { get; init; } = movieScreening;
+    private int RowNr { get; init; } = seatRow;
+    private int SeatNr { get; init; } = seatNr;
+    private bool IsPremium { get; init; } = isPremiumReservation;
 
     public bool IsPremiumTicket => IsPremium;
 

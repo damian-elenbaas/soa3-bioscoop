@@ -4,9 +4,10 @@ namespace Bioscoop.Core.Models;
 public class Movie(string title)
 {
     private string Title { get; set; } = title;
+    private IList<MovieScreening> MovieScreenings { get; set; } = [];
 
-    public void AddScreening()
+    public void AddScreening(MovieScreening movieScreening)
     {
-        throw new NotImplementedException();
+        MovieScreenings.Add(movieScreening);
     }
 }
