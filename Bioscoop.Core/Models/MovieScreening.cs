@@ -1,6 +1,4 @@
 
-using Microsoft.VisualBasic;
-
 namespace Bioscoop.Core.Models;
 
 public class MovieScreening(Movie movie, DateTime dateAndTime, double pricePerSeat)
@@ -9,7 +7,14 @@ public class MovieScreening(Movie movie, DateTime dateAndTime, double pricePerSe
     private DateTime DateAndTime { get; set; } = dateAndTime;
     private double PricePerSeat { get; set; } = pricePerSeat;
 
-    public double GetPricePerSeat() => PricePerSeat;
+    public Movie GetMovie => Movie;
 
-    public DateTime GetDateAndTime() => DateAndTime;
+    public DateTime GetDateAndTime => DateAndTime;
+
+    public double GetPricePerSeat => PricePerSeat;
+
+    public override string ToString()
+    {
+        return $"{Movie}, Date: {DateAndTime}";
+    }
 }
