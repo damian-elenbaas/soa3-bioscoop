@@ -9,6 +9,9 @@ public class MovieTicket(MovieScreening movieScreening, bool isPremiumReservatio
     private bool IsPremium { get; init; } = isPremiumReservation;
 
     public bool IsPremiumTicket => IsPremium;
+    public MovieScreening GetMovieScreening => MovieScreening;
+    public int GetRowNr => RowNr;
+    public int GetSeatNr => SeatNr;
 
     public double GetPrice()
     {
@@ -17,6 +20,6 @@ public class MovieTicket(MovieScreening movieScreening, bool isPremiumReservatio
 
     public override string ToString()
     {
-        throw new NotImplementedException();
+        return $"Movie: {MovieScreening}, Seat: {RowNr}-{SeatNr}";
     }
 }

@@ -1,0 +1,16 @@
+{
+  "OrderNr": 1,
+  "IsStudentOrder": false,
+  "MovieTickets": [
+    {
+      "MovieScreening": {
+        "Movie": { "Title": "Bubu baba" },
+        "DateAndTime": "2025-02-08T21:25:00.0077755+01:00",
+        "PricePerSeat": 10
+      },
+      "RowNr": 1,
+      "SeatNr": 1,
+      "IsPremiumTicket": false
+    }
+  ]
+}

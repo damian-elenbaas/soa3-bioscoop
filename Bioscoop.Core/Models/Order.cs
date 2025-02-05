@@ -1,4 +1,6 @@
 
+using System.Text.Json;
+
 namespace Bioscoop.Core.Models;
 
 public class Order(int orderNr, bool isStudentOrder)
@@ -21,6 +23,49 @@ public class Order(int orderNr, bool isStudentOrder)
 
     public void Export(TicketExportFormat exportFormat)
     {
-        throw new NotImplementedException();
+        string? projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName;
+        switch (exportFormat)
+        {
+            case TicketExportFormat.PLAINTEXT:
+                ExportToPlainText(projectDirectory);
+                break;
+            case TicketExportFormat.JSON:
+                ExportToJSON(projectDirectory);
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
+    private void ExportToPlainText(string? projectDirectory)
+    {
+        var text = $"OrderNr: {OrderNr}\nIsStudentOrder: {IsStudentOrder}\nMovieTickets:\n";
+        text += string.Join("\n - ", MovieTickets.Select(ticket => ticket.ToString()));
+        File.WriteAllText(Path.Combine(projectDirectory ?? "", "order.txt"), text);
+    }
+    private void ExportToJSON(string? projectDirectory)
+    {
+        var json = new
+        {
+            OrderNr,
+            IsStudentOrder,
+            MovieTickets = MovieTickets.Select(ticket => new
+            {
+                MovieScreening = new
+                {
+                    Movie = new
+                    {
+                        Title = ticket.GetMovieScreening.GetMovie.GetTitle
+                    },
+                    DateAndTime = ticket.GetMovieScreening.GetDateAndTime,
+                    PricePerSeat = ticket.GetMovieScreening.GetPricePerSeat
+                },
+                RowNr = ticket.GetRowNr,
+                SeatNr = ticket.GetSeatNr,
+                ticket.IsPremiumTicket
+            })
+        };
+        var jsonString = JsonSerializer.Serialize(json);
+        File.WriteAllText(Path.Combine(projectDirectory ?? "", "order.json"), jsonString);
     }
 }
