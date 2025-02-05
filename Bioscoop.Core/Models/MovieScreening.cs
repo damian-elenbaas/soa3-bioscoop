@@ -1,4 +1,6 @@
 
+using Microsoft.VisualBasic;
+
 namespace Bioscoop.Core.Models;
 
 public class MovieScreening(Movie movie, DateTime dateAndTime, double pricePerSeat)
@@ -8,4 +10,6 @@ public class MovieScreening(Movie movie, DateTime dateAndTime, double pricePerSe
     private double PricePerSeat { get; set; } = pricePerSeat;
 
     public double GetPricePerSeat() => PricePerSeat;
+
+    public DateTime GetDateAndTime() => DateAndTime;
 }

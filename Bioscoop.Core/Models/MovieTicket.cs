@@ -10,10 +10,9 @@ public class MovieTicket(MovieScreening movieScreening, bool isPremiumReservatio
 
     public bool IsPremiumTicket => IsPremium;
 
-    public double GetPrice()
-    {
-        throw new NotImplementedException();
-    }
+    public double GetPrice() => MovieScreening.GetPricePerSeat();
+
+    public DateTime GetDateAndTime() => MovieScreening.GetDateAndTime();
 
     public override string ToString()
     {
