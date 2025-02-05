@@ -9,9 +9,9 @@ public class MovieScreening(Movie movie, DateTime dateAndTime, double pricePerSe
 
     public Movie GetMovie => Movie;
 
-    public DateTime GetDateAndTime => DateAndTime;
+    public DateTime GetDateAndTime() => DateAndTime;
 
-    public double GetPricePerSeat => PricePerSeat;
+    public double GetPricePerSeat() => PricePerSeat;
 
     public override string ToString()
     {

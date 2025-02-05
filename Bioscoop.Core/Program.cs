@@ -6,4 +6,4 @@ var screening = new MovieScreening(movie, DateTime.Now.AddDays(3), 10.0);
 var ticket = new MovieTicket(screening, false, 1, 1);
 var order = new Order(1, false);
 order.AddSeatReservation(ticket);
-order.Export(TicketExportFormat.PLAINTEXT);
+order.Export(TicketExportFormat.JSON);

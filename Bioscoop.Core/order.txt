@@ -1,4 +1,4 @@
 OrderNr: 1
 IsStudentOrder: False
 MovieTickets:
-Movie: Bubu baba, Date: 8-2-2025 21:26:53, Seat: 1-1
+Movie: Bubu baba, Date: 8-2-2025 21:36:15, Seat: 1-1

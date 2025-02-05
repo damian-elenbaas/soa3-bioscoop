@@ -126,8 +126,8 @@ public class Order(int orderNr, bool isStudentOrder)
                     {
                         Title = ticket.GetMovieScreening.GetMovie.GetTitle
                     },
-                    DateAndTime = ticket.GetMovieScreening.GetDateAndTime,
-                    PricePerSeat = ticket.GetMovieScreening.GetPricePerSeat
+                    DateAndTime = ticket.GetMovieScreening.GetDateAndTime(),
+                    PricePerSeat = ticket.GetMovieScreening.GetPricePerSeat()
                 },
                 RowNr = ticket.GetRowNr,
                 SeatNr = ticket.GetSeatNr,
