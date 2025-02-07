@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bioscoop.Core", "Bioscoop.Core\Bioscoop.Core.csproj", "{BD497BEB-6229-4324-A696-C133459BDA47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bioscoop.Tests", "Bioscoop.Tests\Bioscoop.Tests.csproj", "{3DB24771-FAEB-4F86-AB93-F9DBDA2B8ECE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{BD497BEB-6229-4324-A696-C133459BDA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD497BEB-6229-4324-A696-C133459BDA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD497BEB-6229-4324-A696-C133459BDA47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB24771-FAEB-4F86-AB93-F9DBDA2B8ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB24771-FAEB-4F86-AB93-F9DBDA2B8ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB24771-FAEB-4F86-AB93-F9DBDA2B8ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB24771-FAEB-4F86-AB93-F9DBDA2B8ECE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
