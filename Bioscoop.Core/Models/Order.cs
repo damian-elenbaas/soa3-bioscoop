@@ -79,7 +79,7 @@ public class Order(int orderNr, bool isStudentOrder)
                 var dateAndTime = ticket.GetDateAndTime();
 
                 // ma/di/wo/do
-                var isWeekDay = dateAndTime.Day >= 1 && dateAndTime.Day <= 4;
+                var isWeekDay = dateAndTime.DayOfWeek >= DayOfWeek.Monday && dateAndTime.DayOfWeek <= DayOfWeek.Thursday;
 
                 // elke 2e ticket gratis bij een doordeweekse dag.
                 if (ticketNr % 2 == 0 && isWeekDay)
