@@ -1,4 +1,4 @@
-name: SonarQube
+name: Test & Sonar scan
 on:
   push:
     branches:
@@ -6,7 +6,33 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore
+      
+    - name: Test
+      run: dotnet test --collect:"XPlat Code Coverage" --no-build --verbosity normal
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage
+        path: '**/TestResults/**/coverage.cobertura.xml'
   build:
+    needs: test
     name: Build and analyze
     runs-on: windows-latest
     steps:
@@ -42,6 +68,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"damian-elenbaas_soa3-bioscoop" /o:"damian-elenbaas" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"damian-elenbaas_soa3-bioscoop" /o:"damian-elenbaas" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.cobertura.reportsPaths="**/coverage.cobertura.xml"
+              dotnet build
+              .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
