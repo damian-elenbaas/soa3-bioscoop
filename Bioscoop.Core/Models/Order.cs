@@ -1,15 +1,36 @@
 
-using System.Text.Json;
-
 namespace Bioscoop.Core.Models;
 
-public class Order(int orderNr, bool isStudentOrder)
+public class Order
 {
-    private int OrderNr { get; } = orderNr;
-    private bool IsStudentOrder { get; } = isStudentOrder;
+    private int OrderNr { get; }
+    private bool IsStudentOrder { get; }
     private IList<MovieTicket> MovieTickets { get; set; } = [];
 
     private IExportBehavior ExportBehavior { get; set; }
+    public IFreeTicketBehavior FreeTicketBehavior { get; set; }
+    public IGroupDiscountBehavior GroupDiscountBehavior { get; set; }
+    public IPremiumTicketBehavior PremiumTicketBehavior { get; set; }
+
+    public Order(int orderNr, bool isStudentOrder)
+    {
+        OrderNr = orderNr;
+        IsStudentOrder = isStudentOrder;
+        ExportBehavior = new ExportAsPlainText();
+
+        if (IsStudentOrder)
+        {
+            FreeTicketBehavior = new FreeTicketStudentBehavior();
+            GroupDiscountBehavior = new GroupDiscountStudentBehavior();
+            PremiumTicketBehavior = new PremiumTicketStudentBehavior();
+        }
+        else
+        {
+            FreeTicketBehavior = new FreeTicketNonStudentBehavior();
+            GroupDiscountBehavior = new GroupDiscountNonStudentBehavior();
+            PremiumTicketBehavior = new PremiumTicketNonStudentBehavior();
+        }
+    }
 
     public int GetOrderNr() => OrderNr;
     public bool GetIsStudentOrder() => IsStudentOrder;
@@ -27,14 +48,22 @@ public class Order(int orderNr, bool isStudentOrder)
 
     public double CalculatePrice()
     {
-        if (IsStudentOrder)
-        {
-            return CalculateStudentPrice();
-        }
-        else
-        {
-            return CalculateNonStudentPrice();
-        }
+        return MovieTickets
+            .Select((ticket, index) =>
+            {
+                var ticketNr = index + 1;
+                if (FreeTicketBehavior.IsFree(ticketNr, ticket))
+                {
+                    return 0d;
+                }
+
+                var price = ticket.GetPrice();
+                price += PremiumTicketBehavior.CalculatePremiumPriceAddition(ticket);
+                price *= 1 - GroupDiscountBehavior.CalculateGroupDiscountOfTicket(MovieTickets.Count);
+
+                return price;
+            })
+            .Sum();
     }
 
     public void Export(TicketExportFormat exportFormat)
@@ -52,66 +81,5 @@ public class Order(int orderNr, bool isStudentOrder)
             default:
                 throw new NotImplementedException();
         }
-    }
-
-    private double CalculateStudentPrice()
-    {
-        return MovieTickets
-            .Select((ticket, index) =>
-            {
-                var ticketNr = index + 1;
-                // Elke 2e ticket is gratis.
-                if (ticketNr % 2 == 0)
-                {
-                    return 0d;
-                }
-
-                var price = ticket.GetPrice();
-
-                if (ticket.IsPremiumTicket)
-                {
-                    price += Prices.STUDENT_EXTRA_PREMIUM_PRICE;
-                }
-
-                return price;
-            })
-            .Sum();
-    }
-
-    private double CalculateNonStudentPrice()
-    {
-        var hasGroupDiscount = MovieTickets.Count >= 6;
-
-        return MovieTickets
-            .Select((ticket, index) =>
-            {
-                var ticketNr = index + 1;
-                var dateAndTime = ticket.GetDateAndTime();
-
-                // ma/di/wo/do
-                var isWeekDay = dateAndTime.DayOfWeek >= DayOfWeek.Monday && dateAndTime.DayOfWeek <= DayOfWeek.Thursday;
-
-                // elke 2e ticket gratis bij een doordeweekse dag.
-                if (ticketNr % 2 == 0 && isWeekDay)
-                {
-                    return 0d;
-                }
-
-                var price = ticket.GetPrice();
-
-                if (ticket.IsPremiumTicket)
-                {
-                    price += Prices.STANDARD_EXTRA_PREMIUM_PRICE;
-                }
-
-                if (hasGroupDiscount)
-                {
-                    // 10 procent korting
-                    price *= Prices.GROUP_DISCOUNT_PERCENTAGE;
-                }
-
-                return price;
-            })
-            .Sum();
     }
 }
