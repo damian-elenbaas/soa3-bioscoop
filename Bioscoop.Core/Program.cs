@@ -9,4 +9,4 @@ var ticket2 = new MovieTicket(screening, false, 1, 1);
 var order = new Order(1, false);
 order.AddSeatReservation(ticket);
 order.AddSeatReservation(ticket2);
-Console.WriteLine(order.CalculatePrice());
+order.Export(TicketExportFormat.JSON);
