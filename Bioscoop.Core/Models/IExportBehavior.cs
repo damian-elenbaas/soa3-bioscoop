@@ -2,5 +2,5 @@
 
 public interface IExportBehavior
 {
-    void Export(Order Order);
+    void Export(Order order);
 }
