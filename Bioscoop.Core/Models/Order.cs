@@ -3,17 +3,31 @@ using System.Text.Json;
 
 namespace Bioscoop.Core.Models;
 
-public class Order(int orderNr, bool isStudentOrder)
+public class Order
 {
-    private int OrderNr { get; } = orderNr;
-    private bool IsStudentOrder { get; } = isStudentOrder;
+    private int OrderNr { get; }
+    private bool IsStudentOrder { get; }
     private IList<MovieTicket> MovieTickets { get; set; } = [];
+    private IOrderState State { get; set; }
+
+    public Order(int orderNr, bool isStudentOrder)
+    {
+        OrderNr = orderNr;
+        IsStudentOrder = isStudentOrder;
+        State = new UnsubmittedState(this);
+    }
 
     public int GetOrderNr() => OrderNr;
+
+    public void SetState(IOrderState state)
+    {
+        State = state;
+    }
 
     public void AddSeatReservation(MovieTicket ticket)
     {
         MovieTickets.Add(ticket);
+        State.UpdateOrder();
     }
 
     public double CalculatePrice()
