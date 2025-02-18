@@ -1,7 +1,7 @@
 
 namespace Bioscoop.Core.Models;
 
-public interface IOrderState 
+public interface IOrderState
 {
 
     public void CreateOrder(int ticketCount, MovieScreening movieScreening, bool parkingCard);
@@ -10,7 +10,7 @@ public interface IOrderState
 
     public void UpdateOrder();
 
-    public void SentReminder();
+    public void SendReminder();
 
     public void PayOrder();
 

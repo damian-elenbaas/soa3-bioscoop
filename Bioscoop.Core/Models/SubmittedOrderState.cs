@@ -21,7 +21,7 @@ public class SubmittedOrderState(Order order) : IOrderState
 
     }
 
-    public void SentReminder()
+    public void SendReminder()
     {
         order.SetState(new ProvisionalOrderState(order));
     }

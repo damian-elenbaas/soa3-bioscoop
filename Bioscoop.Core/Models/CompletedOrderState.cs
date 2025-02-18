@@ -21,7 +21,7 @@ public class CompletedOrderState(Order order) : IOrderState
 
     }
 
-    public void SentReminder()
+    public void SendReminder()
     {
 
     }

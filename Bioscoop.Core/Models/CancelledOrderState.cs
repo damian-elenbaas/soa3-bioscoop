@@ -1,7 +1,7 @@
 
 namespace Bioscoop.Core.Models;
 
-public class CanceledOrderState(Order order) : IOrderState 
+public class CanceledOrderState(Order order) : IOrderState
 {
     private readonly Order parentOrder = order;
 
@@ -20,7 +20,7 @@ public class CanceledOrderState(Order order) : IOrderState
 
     }
 
-    public void SentReminder()
+    public void SendReminder()
     {
 
     }

@@ -21,7 +21,7 @@ public class ProvisionalOrderState(Order order) : IOrderState
 
     }
 
-    public void SentReminder()
+    public void SendReminder()
     {
 
     }

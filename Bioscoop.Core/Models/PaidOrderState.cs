@@ -1,8 +1,10 @@
 
 namespace Bioscoop.Core.Models;
 
-public class PaidOrderState : IOrderState 
+public class PaidOrderState(Order order) : IOrderState
 {
+
+    private readonly Order parentOrder = order;
 
     public void CreateOrder(int ticketCount, MovieScreening movieScreening, bool parkingCard)
     {
@@ -19,7 +21,7 @@ public class PaidOrderState : IOrderState
 
     }
 
-    public void SentReminder()
+    public void SendReminder()
     {
 
     }
