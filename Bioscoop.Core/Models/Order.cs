@@ -9,6 +9,7 @@ public class Order
     private bool IsStudentOrder { get; }
     private IList<MovieTicket> MovieTickets { get; set; } = [];
     private IOrderState State { get; set; }
+    private readonly NotifyPublisher notifyPublisher = new();
 
     public Order(int orderNr, bool isStudentOrder)
     {
@@ -27,6 +28,11 @@ public class Order
     public IOrderState GetState()
     {
         return State;
+    }
+
+    public NotifyPublisher GetNotifyPublisher()
+    {
+        return notifyPublisher;
     }
 
     public void AddSeatReservation(MovieTicket ticket)
