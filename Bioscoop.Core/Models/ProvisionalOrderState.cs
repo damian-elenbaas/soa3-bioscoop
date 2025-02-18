@@ -6,11 +6,6 @@ public class ProvisionalOrderState(Order order) : IOrderState
 
     private readonly Order parentOrder = order;
 
-    public void CreateOrder(int ticketCount, MovieScreening movieScreening, bool parkingCard)
-    {
-
-    }
-
     public void SubmitOrder()
     {
 
@@ -31,7 +26,7 @@ public class ProvisionalOrderState(Order order) : IOrderState
         order.SetState(new PaidOrderState(order));
     }
 
-    public void SentOrder()
+    public void SendOrder()
     {
 
     }

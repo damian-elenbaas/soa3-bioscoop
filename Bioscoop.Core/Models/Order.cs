@@ -24,6 +24,11 @@ public class Order
         State = state;
     }
 
+    public IOrderState GetState()
+    {
+        return State;
+    }
+
     public void AddSeatReservation(MovieTicket ticket)
     {
         MovieTickets.Add(ticket);

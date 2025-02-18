@@ -6,11 +6,6 @@ public class UnsubmittedState(Order order) : IOrderState
 
     private readonly Order parentOrder = order;
 
-    public void CreateOrder(int ticketCount, MovieScreening movieScreening, bool parkingCard)
-    {
-        return;
-    }
-
     public void SubmitOrder()
     {
         order.SetState(new SubmittedOrderState(order));
@@ -31,7 +26,7 @@ public class UnsubmittedState(Order order) : IOrderState
 
     }
 
-    public void SentOrder()
+    public void SendOrder()
     {
 
     }

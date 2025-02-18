@@ -6,11 +6,6 @@ public class CompletedOrderState(Order order) : IOrderState
 
     private readonly Order parentOrder = order;
 
-    public void CreateOrder(int ticketCount, MovieScreening movieScreening, bool parkingCard)
-    {
-
-    }
-
     public void SubmitOrder()
     {
 
@@ -31,7 +26,7 @@ public class CompletedOrderState(Order order) : IOrderState
 
     }
 
-    public void SentOrder()
+    public void SendOrder()
     {
 
     }
